@@ -13,13 +13,14 @@ m.grid()
 waktu_lokal = datetime.now().strftime('%H:%M:%S')
 
 waktu_offline = None
-durasi_offline = "Belom offline"
+durasi_offline = "Belom pernah offline"
 label_lama = None
 
 # Fungsi #
 def refresh():
     m.destroy()
     os.system(__file__)
+    #m.after(5000, refresh)
 
 def lihatip():
     try:
@@ -48,7 +49,7 @@ def status():
 
 def lamaoffline(mulai, selesai):
     perbandingan = selesai - mulai
-    detik = float(str(detik.total_seconds()))
+    detik = perbandingan.total_seconds()
     return str(timedelta(seconds=detik)).split(".")[0]
 
 # inisiasi label dll
