@@ -61,11 +61,12 @@ tk.Label(m, text= 'Waktu lokal: ').grid(row= 0, pady= 5, column= 0, sticky= 'w',
 label_ip = tk.Label(m, text= "")
 label_status = tk.Label(m, text= "")
 label_lama = tk.Label(m, text= durasi_offline)
+waktu_lokal = tk.Label(m, text= f"{waktu_lokal}")
 
 #lokasi label
 label_ip.grid(row=1, column=1, pady=5, sticky= 'w')
 label_status.grid(row = 2, column= 1, pady= 5, sticky= 'w')
-waktu_lokal = tk.Label(m, text= f"{waktu_lokal}").grid(row= 0, column= 1, columnspan= 2, padx= 5, pady= 5, sticky= 'w')
+waktu_lokal.grid(row= 0, column= 1, columnspan= 2, padx= 5, pady= 5, sticky= 'w')
 label_lama.grid(row = 3, column= 1, pady= 5, sticky= 'w' )
 
 ## Tombol ##
