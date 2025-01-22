@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, IntVar, Checkbutton
 from ip_grab import alamatip, interstatus
 import os
 from datetime import datetime, timedelta
@@ -12,9 +12,11 @@ m.frame()
 m.grid()
 waktu_lokal = datetime.now().strftime('%H:%M:%S')
 
+#inisiasi tombol variable
 waktu_offline = None
 durasi_offline = "Belom pernah offline"
 label_lama = None
+tombol_refresh = None
 
 # Fungsi #
 def refresh():
@@ -52,24 +54,45 @@ def lamaoffline(mulai, selesai):
     detik = perbandingan.total_seconds()
     return str(timedelta(seconds=detik)).split(".")[0]
 
+def klik():
+    global tombol_refresh
+    if var1.get() == 1:
+        if tombol_refresh:
+            tombol_refresh.destroy()
+        lama = m.after(5000, refresh)
+        durasi_refresh.config(text= str(lama))
+    else:    
+        pass
+#Intvar
+var1 = IntVar()
+
 # inisiasi label dll
 tk.Label(m, text= 'Ip Internet: ').grid(row = 1, column= 0, pady = 5, padx= 5, sticky='w')
 tk.Label(m, text= 'Status internet: ').grid(row = 2, column= 0, pady= 5, padx= 5, sticky= 'w')
 tk.Label(m, text= 'Lama offline: ').grid(row = 3, pady = 5, column= 0, sticky= 'w', padx= 5)
 tk.Label(m, text= 'Waktu lokal: ').grid(row= 0, pady= 5, column= 0, sticky= 'w', padx= 5)
 
+#cekbutton
+cek_ulang = Checkbutton(m, text = "Auto?", variable= var1, onvalue= 1, offvalue= 0, command= klik)
+
+#label tulisan
 label_ip = tk.Label(m, text= "")
 label_status = tk.Label(m, text= "")
 label_lama = tk.Label(m, text= durasi_offline)
+waktu_lokal = tk.Label(m, text= f"{waktu_lokal}")
+durasi_refresh = tk.Label(m, text= "")
 
 #lokasi label
 label_ip.grid(row=1, column=1, pady=5, sticky= 'w')
 label_status.grid(row = 2, column= 1, pady= 5, sticky= 'w')
-waktu_lokal = tk.Label(m, text= f"{waktu_lokal}").grid(row= 0, column= 1, columnspan= 2, padx= 5, pady= 5, sticky= 'w')
+waktu_lokal.grid(row= 0, column= 1, columnspan= 2, padx= 5, pady= 5, sticky= 'w')
 label_lama.grid(row = 3, column= 1, pady= 5, sticky= 'w' )
+cek_ulang.grid(row= 4, column= 0, padx= 0)
+durasi_refresh.grid(row = 4, column= 1, padx= 0)
 
 ## Tombol ##
-tombol_refresh = tk.Button(m, text= "Refresh", command= refresh).grid(row = 4, column= 0, columnspan= 2, pady= 10)
+tombol_refresh = tk.Button(m, text= "Refresh", command= refresh)
+tombol_refresh.grid(row = 4, column= 0, columnspan= 2, pady= 10)
 
 if __name__ == "__main__":
     lihatip()
