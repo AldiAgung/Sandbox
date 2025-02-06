@@ -20,10 +20,22 @@ if kata == "YA":
             time.sleep(2)
             angka = random.randrange(1,10)
             print(angka)
-            tebak = int(input("tebak angkanya: "))
+            
+            while True:
+                try:
+                    tebak = int(input("tebak angkanya: "))
+                    break
+                except ValueError:
+                    print("harus berupa angka")
+
             while (tebak != angka):
                 if os.path.exists('Halo.txt'):
-                    break
+                    try:
+                        os.startfile('Halo.txt')
+                        exit()
+                    except AttributeError:
+                        os.system(f"open Halo.txt")
+                        exit()
                 try:
                     print("sayang sekali jawaban kamu salah")
                     time.sleep(2)
