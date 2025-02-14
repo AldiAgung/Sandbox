@@ -12,4 +12,5 @@ while (True):
         time.sleep(2)
 
 #python -m compileall -l laptop.py
+#pip install -U pyinstaller
 #python -m PyInstaller laptop.py
