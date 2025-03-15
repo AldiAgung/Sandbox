@@ -17,6 +17,9 @@ waktu_offline = None
 durasi_offline = "Belom pernah offline"
 label_lama = None
 tombol_refresh = None
+refresh_id = None
+interval_waktu = 5000
+mulai_refresh = None
 
 # Fungsi #
 def refresh():
@@ -55,14 +58,37 @@ def lamaoffline(mulai, selesai):
     return str(timedelta(seconds=detik)).split(".")[0]
 
 def klik():
-    global tombol_refresh
+    global refresh_id, interval_waktu
     if var1.get() == 1:
-        if tombol_refresh:
-            tombol_refresh.destroy()
-        lama = m.after(5000, refresh)
-        durasi_refresh.config(text= str(lama))
+        mulai_penghitungan()
     else:    
-        pass
+        stop_auto()
+
+def mulai_penghitungan():
+    global refresh_id, mulai_refresh
+    stop_auto()
+    mulai_refresh = datetime.now()
+    refresh_id = m.after(interval_waktu, refresh)
+    update_count_label()
+
+def stop_auto():
+    global refresh_id
+    if refresh_id:
+        m.after_cancel(refresh_id)
+        refresh_id = None
+    durasi_refresh.config(text="")
+
+def update_count_label():
+    global refresh_id, mulai_refresh
+    if refresh_id and mulai_refresh:
+        sisa_waktu = interval_waktu - (datetime.now() - mulai_refresh).total_seconds() * 1000 
+        if sisa_waktu == 0:
+            durasi_refresh.config(text= "Sedang mengulang...")
+        else:
+            sisa_detik = int(sisa_waktu / 1000) + 1
+            durasi_refresh.config(text= f"Refresh dalam {sisa_detik}")
+            m.after(1000, update_count_label)
+
 #Intvar
 var1 = IntVar()
 
@@ -87,13 +113,14 @@ label_ip.grid(row=1, column=1, pady=5, sticky= 'w')
 label_status.grid(row = 2, column= 1, pady= 5, sticky= 'w')
 waktu_lokal.grid(row= 0, column= 1, columnspan= 2, padx= 5, pady= 5, sticky= 'w')
 label_lama.grid(row = 3, column= 1, pady= 5, sticky= 'w' )
-cek_ulang.grid(row= 4, column= 0, padx= 0)
-durasi_refresh.grid(row = 4, column= 1, padx= 0)
+cek_ulang.grid(row= 4, column= 0, padx= 0, sticky= 'w')
+durasi_refresh.grid(row = 4, column= 1, padx= 0, stick= 'w')
 
 ## Tombol ##
 tombol_refresh = tk.Button(m, text= "Refresh", command= refresh)
-tombol_refresh.grid(row = 4, column= 0, columnspan= 2, pady= 10)
+tombol_refresh.grid(row = 5, column= 0, columnspan= 2, pady= 10)
 
+#Inisiasi aplikasi
 if __name__ == "__main__":
     lihatip()
     status()
