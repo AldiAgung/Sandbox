@@ -1,10 +1,8 @@
 .gitignore
-porto
+apa aja/
 restart.py
 __pycache__
 .vscode
-test.py
 .venv
 laptop
 api.py
-radar.html
