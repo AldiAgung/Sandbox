@@ -14,3 +14,4 @@ while (True):
 #python -m compileall -l laptop.py
 #pip install -U pyinstaller
 #python -m PyInstaller laptop.py
+#pip install --upgrade cx_Freeze
