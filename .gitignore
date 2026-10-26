@@ -1,11 +1,10 @@
 .gitignore
-porto
 apa aja/
-hallo/
 rill/
 tes.py
 restart.py
 __pycache__
 test.py
-laptop
+laptop.py
 api.py
+.vscode
